@@ -104,5 +104,61 @@ class DeleteView(View):
             room = Room.objects.get(pk=id)
             room.delete()
 
-        return redirect("/bookconfroom")
+        return redirect("/bookconfroom/")
 
+class ReservationView(View):
+    
+    def get(self, request, id):
+        room = Room.objects.get(pk=id)       
+        reservations = room.reservation_set.filter(date__gte=today).order_by('date')
+        ctx = {
+            "room":room,
+            "reservations": reservations
+        }
+        return render(request, 'booking/reservation.html', ctx)
+
+    def post(self, request, id):
+        room = Room.objects.get(pk=id)
+        reservations = room.reservation_set.filter(date__gte=today).order_by('date')    
+        try:
+            date = request.POST.get('date')
+            comment = request.POST.get('comment')
+            message = ""
+
+            if room.reservation_set.filter(date=date):
+                message = "Bilik sudah diduduki hari itu"
+            elif date < today:
+                message = 'Tarikh yang dipilih tidak boleh dari masa lalu'
+            if(message == "Bilik sudah diduduki hari itu" or message == "Tarikh yang dipilih tidak boleh dari masa lalu" ):
+                ctx = {
+                    'room':room,
+                    'reservations':reservations,
+                    'message':message,
+                }
+                return render(request, 'booking/reservation.html')
+            reservation = Reservation.objects.create(date=date, comment=comment)
+            reservation.room.add(room)
+            
+        except Exception as e:
+            message = 'data tidak betul: {}'.format(e)
+            ctx = {
+                'message':message,
+                'room':room,
+                'reservation':reservation
+            }
+            return render(request, 'booking/reservation.html', ctx)
+        if room.projector == True:
+            projector = "YA"
+        else:
+            projector = "tidak"
+        message = """ Terima kasih! , Anda telah menempah bilik : {} dalam sehari:{} """.format(room.name, date)
+        ctx = {
+            'room':room,
+            'projector':projector,
+            'reservations':reservations,
+            'message':message,
+        }
+        return render(request, 'booking/room.html', ctx)
+    
+            
+    
