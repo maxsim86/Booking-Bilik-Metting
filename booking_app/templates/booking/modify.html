@@ -4,15 +4,15 @@
 
 {% block content %}
     <br/>
-    <h2>Modyfikacja sali konferencyjnej: {{ room.name }}</h2>
+    <h2>Pengubahsuaian bilik persidangan: {{ room.name }}</h2>
     <p class="text-danger">{{ message }}</p>
     <form method="POST" action="#">
     {% csrf_token %}
-        <label>Sala
+        <label>Bilik
             <input type="text" name="name" value="{{ room.name }}" class="form-control">
         </label>
         <br/>
-        <label>Pojemność:
+        <label>Kapasiti:
             <input type="number" name="capacity", value="{{ room.capacity }}" class="form-control">
         </label>
         <br/>
@@ -23,6 +23,6 @@
         {% endif %}
         <br/>
         <br/>
-        <input class="btn btn-warning" type="submit" value="MODYFIKUJ">
+        <input class="btn btn-warning" type="submit" value="UBAHSUAI">
     </form>
 {% endblock %}

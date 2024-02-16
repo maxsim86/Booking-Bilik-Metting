@@ -26,7 +26,7 @@
                 {% endif %}
             {% endfor %}
             <td><a href="{% url 'booking:modify' room.id %}"><button class="btn btn-warning">ubah suai</button></a></td>
-            <td><a href=""><button class="btn btn-danger">padam</button></a></td>
+            <td><a href="{% url 'booking:delete' room.id %}"><button class="btn btn-danger">padam</button></a></td>
         </tr>
         {% endfor %}
     </table>

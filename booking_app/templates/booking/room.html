@@ -1,4 +1,4 @@
-{% extends 'Book/base.html' %}
+{% extends 'booking/base.html' %}
 
 {% block title %}Room details{% endblock %}
 
@@ -24,7 +24,7 @@
         <tr>
             <td>Menempah bilik</td>
             <td>
-                <a href="{% url 'book:reservation' room.id %}">
+                <a href="{% url 'booking:reservation' room.id %}">
                 <button class="btn btn-success">Tempah sekarang</button></a>
             </td>
         </tr>
@@ -32,21 +32,21 @@
     <br/>
 
     {% if room.id > 1 %}
-        <a href="{% url 'book:room' room.id|add:'-1' %}">
+        <a href="{% url 'booking:room' room.id|add:'-1' %}">
             <button class="btn btn-warning">Bilik petang</button>
         </a>
     {% else %}
-        <a href="{% url 'book:room' rooms|length %}">
+        <a href="{% url 'booking:room' rooms|length %}">
             <button class="btn btn-warning">Bilik petang</button>
         </a>
     {% endif %}
 
     {% if room.id < rooms|length %}
-        <a href="{% url 'book:room' room.id|add:'1' %}">
+        <a href="{% url 'booking:room' room.id|add:'1' %}">
             <button class="btn btn-warning">Bilik lain</button>
         </a>
     {% else %}
-        <a href="{% url 'book:room' 1 %}">
+        <a href="{% url 'booking:room' 1 %}">
             <button class="btn btn-warning">Bilik lain</button>
         </a>
     {% endif %}
