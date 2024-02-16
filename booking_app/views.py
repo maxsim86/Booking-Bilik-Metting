@@ -160,5 +160,33 @@ class ReservationView(View):
         }
         return render(request, 'booking/room.html', ctx)
     
+class SearchView(View):
+    def get(self, request):
+        room = request.GET.get('room')
+        capacity = request.GET.get('capacity')
+        date = request.GET.get ('date')
+        projector = True if request.GET.get('projector') else False
+        
+        result1 = Room.objects.exclude(reservation__date=date)
+
+        if room == "":
+            result2 = result1
+        else:
+            result2 = result1.filter(name__icontains=room)
+
+        if capacity !="":
+            result3 = result2.filter(capacity__gte=int(capacity))
+        else:
+            result3 = result2
             
-    
+        if projector:
+            result4 = result3.filter(projector=projector)
+        else:
+            result4 = result3
+
+        ctx = {
+            'results': result4,
+            'date': date,
+        }
+        return render(request, 'booking/search.html')
+            
