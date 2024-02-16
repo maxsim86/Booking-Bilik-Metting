@@ -1,0 +1,56 @@
+{% extends 'booking/base.html' %}
+
+{% block title %}Bilik persidangan{% endblock %}
+
+{% block content %}
+    <br/>
+    <h2>Bilik persidangan untuk ditempah</h2>
+    <table class="table table-striped table-bordered">
+        <tr>
+            <thead class="thead lead">
+                <th>NAMA BILIK</th>
+                <th>KAPASITI</th>
+                <th>STATUS</th>
+                <th>UBAHSUAI</th>
+                <th>PADAM</th>
+            </thead>
+        </tr>
+        {% for room in rooms %}
+        <tr>
+            <td><a href="">{{ room.name }}</a></td>
+            <td>{{ room.capacity }}</td>
+            {% for k,v in status.items %}
+                {% if room.id == k %}
+                    <td{% if v == "Free" %} class="text-success"
+                    {% else %} class="text-danger" {% endif %}>{{ v }}</td>
+                {% endif %}
+            {% endfor %}
+            <td><a href=""><button class="btn btn-warning">ubah suai</button></a></td>
+            <td><a href=""><button class="btn btn-danger">padam</button></a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="">
+        <button class="btn btn-success">Buat bilik persidangan baharu</button>
+    </a><br/><br/>
+    <div class="jumbotron">
+        <h3>CARI BILIK YANG DISEDIAKAN</h3>
+        <br/>
+        <form id="search" method="get" action="">
+            <label>NAMA BILIK
+                <input type="text" name="room">
+            </label><br/>
+            <label>KAPASITI MINIMUM
+                <input type="number" name="capacity">
+            </label><br/>
+            <label>TARIKH TEMPAHAN
+                <input type="date" name="date" required="required">
+            </label><br/>
+            <label>PROJEKTOR
+                <input type="checkbox" name="projector">
+            </label><br/>
+                <input type="submit" value="Cari" class="btn btn-warning">
+        </form>
+    </div>
+
+{% endblock %}

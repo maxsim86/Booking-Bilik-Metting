@@ -2,18 +2,17 @@ from django.db import models
 
 # Create your models here.
 class Room(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    capacity = models.PositiveIntegerField()
-
+    name = models.CharField(max_length=255)
+    capacity = models.IntegerField()
     
     def __str__(self):
         return self.name
 
-class Booking(models.Model):
+class Reservation(models.Model):
     room_id = models.ForeignKey(Room, on_delete=models.CASCADE)
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
-    organizer_name = models.CharField(max_length=200)
-    organizer_email = models.EmailField()
+    date = models.DateField()
     comment = models.TextField(null=True)
+
+    def __str__(self):
+        return self.comment
     
