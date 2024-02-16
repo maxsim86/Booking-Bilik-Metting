@@ -1,4 +1,4 @@
-{% extends 'Book/base.html' %}
+{% extends 'booking/base.html' %}
 
 {% block title %}Reservation{% endblock %}
 
@@ -6,11 +6,11 @@
     <br/>
     <table class="table table-bordered table-striped">
         <tr>
-            <td>Sala:</td>
+            <td>Bilik:</td>
             <td>{{ room.name }}</td>
         </tr>
         <tr>
-            <td>Zajęte terminy:</td>
+            <td>Tarikh sibuk:</td>
             <td>
                 {% for book in reservations %}
                 {{ book }}<br/>
@@ -19,7 +19,7 @@
         </tr>
     </table>
 
-    <h2>Zarezerwuj termin - sala {{ room.name }}</h2>
+    <h2>Tempah tarikh anda - bilik {{ room.name }}</h2>
     <p class="text-danger">{{ message }}</p>
 
     <form method="post" action="#">
@@ -27,11 +27,11 @@
         <label>Data:
             <input type="date" name="date" required="required">
         </label><br/>
-        <label>Dodatkowe uwagi:<br/>
-            <textarea name="comment" class="form-control">Brak</textarea>
+        <label>Teguran tambahan:<br/>
+            <textarea name="comment" class="form-control">kekurangan</textarea>
         </label><br/>
-        <input type="submit" name="submit" value="zarezerwuj" class="btn btn-success">
+        <input type="submit" name="submit" value="buku" class="btn btn-success">
     </form>
-    <a href="{% url 'book:room' room.id %}">
-            <button class="btn btn-warning">Powrót do widoku sali</button></a>
+    <a href="{% url 'booking:room' room.id %}">
+            <button class="btn btn-warning">Kembali ke pemandangan bilik</button></a>
 {% endblock %}

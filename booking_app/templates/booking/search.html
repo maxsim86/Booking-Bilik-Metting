@@ -1,23 +1,23 @@
-{% extends "Book/base.html" %}
+{% extends "booking/base.html" %}
 
-{% block title %}Wyszukiwanie{% endblock %}
+{% block title %}Cari{% endblock %}
 
 {% block content %}
 <br/>
-<h2>Sale dostępne w terminie: {{ date }} spełniające wymagania:</h2>
+<h2>Bilik tersedia tepat pada masanya: {{ date }} memenuhi keperluan:</h2>
 <br/>
 <table class="table table-bordered table-striped">
     <thead class="lead">
         <tr>
-            <th>SALA:</th>
-            <th>POJEMNOŚĆ:</th>
+            <th>BILIK:</th>
+            <th>KAPASITI:</th>
             <th>PROJEKTOR:</th>
         </tr>
     </thead>
     <tbody>
     {% for result in results %}
         <tr>
-            <td><a href="{% url 'book:room' result.id %}">{{ result.name }}</a></td>
+            <td><a href="{% url 'booking:room' result.id %}">{{ result.name }}</a></td>
             <td>{{ result.capacity }}</td>
             <td>
                 {% if result.projector == True %}
@@ -31,7 +31,7 @@
     </tbody>
 </table>
 <br/>
-<p class="text-danger">*Kliknięcie w nazwę sali przeniesie cię do strony rezerwacji</p>
+<p class="text-danger">*Mengklik pada nama bilik akan membawa anda ke halaman tempahan</p>
 
 
 {% endblock %}

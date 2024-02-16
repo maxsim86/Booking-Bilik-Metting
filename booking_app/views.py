@@ -143,7 +143,7 @@ class ReservationView(View):
             ctx = {
                 'message':message,
                 'room':room,
-                'reservation':reservation
+                'reservations':reservations,
             }
             return render(request, 'booking/reservation.html', ctx)
         if room.projector == True:
