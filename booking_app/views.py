@@ -28,7 +28,7 @@ def index(request):
 def room(request, id):
     id = int(id)
     room = Room.objects.get(pk=id)
-    reservation = room.reservation_set.filter(date__gte=today).order_by('date')
+    reservations = room.reservation_set.filter(date__gte=today).order_by('date')
     rooms = Room.objects.all()
     if room.projector == True:
         projector = "YA"
@@ -37,11 +37,10 @@ def room(request, id):
     ctx = {
         "room": room,
         "projector": projector,
-        "rooms":rooms
+        "reservations":reservations,
+        "rooms":rooms,
     }
-    
     return render(request, 'booking/room.html', ctx)
-
 
 class NewRoomView(View):
     def get(self, request):

@@ -17,7 +17,7 @@
         </tr>
         {% for room in rooms %}
         <tr>
-            <td><a href="">{{ room.name }}</a></td>
+            <td><a href="{% url 'booking:room' room.id %}">{{ room.name }}</a></td>
             <td>{{ room.capacity }}</td>
             {% for k,v in status.items %}
                 {% if room.id == k %}
@@ -25,7 +25,7 @@
                     {% else %} class="text-danger" {% endif %}>{{ v }}</td>
                 {% endif %}
             {% endfor %}
-            <td><a href=""><button class="btn btn-warning">ubah suai</button></a></td>
+            <td><a href="{% url 'booking:modify' room.id %}"><button class="btn btn-warning">ubah suai</button></a></td>
             <td><a href=""><button class="btn btn-danger">padam</button></a></td>
         </tr>
         {% endfor %}
