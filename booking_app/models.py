@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Room(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=100)
     capacity = models.IntegerField()
     projector = models.BooleanField(default=True)
     
@@ -15,5 +15,6 @@ class Reservation(models.Model):
     comment = models.TextField()
 
     def __str__(self):
-        return self.comment
+        for r in self.room.all():
+            return "Tarikh tempahan: {}, bilik: {}".format(self.date, r.name)
     

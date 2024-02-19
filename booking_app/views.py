@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .models import Room, Reservation
 from datetime import datetime
 from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 
 # Create your views here.
@@ -17,7 +19,7 @@ def index(request):
         if room.reservation_set.filter(date=today):
             status[room.id] = "Sibuk"
         else:
-            status[room.id] = "free"
+            status[room.id] = "Free"
 
             ctx = {
                 "rooms": rooms,
@@ -42,8 +44,14 @@ def room(request, id):
     }
     return render(request, 'booking/room.html', ctx)
 
-class NewRoomView(View):
+class NewRoomView(LoginRequiredMixin, View):
+    login_url = '/admin/login/'
+    
+
     def get(self, request):
+        return render(request, 'booking/new_room.html')
+    
+    def post(self, request):
         
         try:
             name = request.POST.get("name")
@@ -53,7 +61,8 @@ class NewRoomView(View):
             
             Room.objects.create(name=name, capacity=capacity, projector=proj)
 
-            return redirect("/bookconfroom/")
+            return redirect("/")
+
         except Exception as e:
             message = "Data tidak betul: {}".format(e)
             ctx = {
@@ -79,7 +88,7 @@ class ModifyView(View):
             room.capacity = capacity
             room.projector = projector
             room.save()
-            return redirect('/bookconfroom')
+            return redirect('/')
         except Exception as e:
             message = "Data tidak betul: {}".format(e)
             ctx = {
@@ -87,6 +96,7 @@ class ModifyView(View):
                 "room": room,
             }
             return render(request, 'booking/modify.html', ctx)
+
         
 class DeleteView(View):
     def get(self, request, id):
@@ -103,7 +113,7 @@ class DeleteView(View):
             room = Room.objects.get(pk=id)
             room.delete()
 
-        return redirect("/bookconfroom/")
+        return redirect("/")
 
 class ReservationView(View):
     
@@ -146,11 +156,12 @@ class ReservationView(View):
                 'reservations':reservations,
             }
             return render(request, 'booking/reservation.html', ctx)
+
         if room.projector == True:
             projector = "YA"
         else:
-            projector = "tidak"
-        message = """ Terima kasih! , Anda telah menempah bilik : {} dalam sehari:{} """.format(room.name, date)
+            projector = "TIDAK"
+            message = """Terima kasih! Saya telah menempah bilik: {} pada: {}""".format(room.name, date)
         ctx = {
             'room':room,
             'projector':projector,
@@ -158,7 +169,7 @@ class ReservationView(View):
             'message':message,
         }
         return render(request, 'booking/room.html', ctx)
-    
+
 class SearchView(View):
     def get(self, request):
         room = request.GET.get('room')
@@ -187,5 +198,5 @@ class SearchView(View):
             'results': result4,
             'date': date,
         }
-        return render(request, 'booking/search.html')
+        return render(request, 'booking/search.html', ctx)
             
