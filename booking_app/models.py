@@ -10,9 +10,9 @@ class Room(models.Model):
         return self.name
 
 class Reservation(models.Model):
-    room_id = models.ForeignKey(Room, on_delete=models.CASCADE)
+    room = models.ManyToManyField(Room)
     date = models.DateField()
-    comment = models.TextField(null=True)
+    comment = models.TextField()
 
     def __str__(self):
         return self.comment
