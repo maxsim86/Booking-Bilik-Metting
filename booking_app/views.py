@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from .models import Room, Reservation
 from datetime import datetime
 from django.views import View
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
@@ -44,10 +43,8 @@ def room(request, id):
     }
     return render(request, 'booking/room.html', ctx)
 
-class NewRoomView(LoginRequiredMixin, View):
-    login_url = '/admin/login/'
+class NewRoomView(View):
     
-
     def get(self, request):
         return render(request, 'booking/new_room.html')
     

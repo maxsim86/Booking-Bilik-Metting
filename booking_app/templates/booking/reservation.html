@@ -6,11 +6,11 @@
     <br/>
     <table class="table table-bordered table-striped">
         <tr>
-            <td>Bilik:</td>
-            <td>{{ room.name }}</td>
+            <td>Bilik :</td>
+            <td>{{ room.name|upper }}</td>
         </tr>
         <tr>
-            <td>Tarikh sibuk:</td>
+            <td>Tarikh sibuk :</td>
             <td>
                 {% for book in reservations %}
                 {{ book }}<br/>
@@ -19,7 +19,7 @@
         </tr>
     </table>
 
-    <h2>Tempah tarikh anda - bilik {{ room.name }}</h2>
+    <h2>Tempah Tarikh Anda - {{ room.name }}</h2>
     <p class="text-danger">{{ message }}</p>
 
     <form method="post" action="#">
@@ -27,11 +27,11 @@
         <label>Tarikh:
             <input type="date" name="date" required="required">
         </label><br/>
-        <label>Komen tambahan:<br/>
-            <textarea name="comment" class="form-control">kekurangan</textarea>
+        <label>Detail Tambahan:<br/>
+            <textarea name="comment" class="form-control">detail</textarea>
         </label><br/>
-        <input type="submit" name="submit" value="buku" class="btn btn-success">
-    </form>
+        <input type="submit" name="submit" value="Tempah" class="btn btn-success">
+    </form> <br>
     <a href="{% url 'booking:room' room.id %}">
             <button class="btn btn-warning">Kembali ke pemandangan bilik</button></a>
 {% endblock %}
